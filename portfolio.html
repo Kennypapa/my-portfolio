@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kehinde Daramola — Full Stack Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            accent: { 400: '#818CF8', 500: '#6366F1', 600: '#4F46E5' },
+            surface: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              800: '#111118',
+              900: '#09090B',
+              950: '#050507',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Space Grotesk', sans-serif; }
+
+    /* ---- scrollbar ---- */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #6366F1; border-radius: 99px; }
+
+    /* ---- noise overlay ---- */
+    .noise::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ---- grid background ---- */
+    .grid-bg {
+      background-size: 60px 60px;
+      background-image:
+        linear-gradient(to right, rgba(99,102,241,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99,102,241,0.04) 1px, transparent 1px);
+    }
+    html:not(.dark) .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(99,102,241,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99,102,241,0.06) 1px, transparent 1px);
+    }
+
+    /* ---- cursor blob ---- */
+    #blob {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transform: translate(-50%, -50%);
+    }
+    html:not(.dark) #blob {
+      background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%);
+    }
+
+    /* ---- animations ---- */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes pop {
+      0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .animate-slide-up { animation: slideUp 0.7s ease both; }
+    .animate-marquee { animation: marquee 25s linear infinite; }
+    .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+
+    .typewriter-text {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #6366F1;
+      animation: typewriter 2s steps(30) 0.5s both, blink 0.8s step-end infinite;
+    }
+
+    /* stagger */
+    .stagger > * { animation: pop 0.5s ease both; }
+    .stagger > *:nth-child(1) { animation-delay: 0.05s; }
+    .stagger > *:nth-child(2) { animation-delay: 0.1s; }
+    .stagger > *:nth-child(3) { animation-delay: 0.15s; }
+    .stagger > *:nth-child(4) { animation-delay: 0.2s; }
+    .stagger > *:nth-child(5) { animation-delay: 0.25s; }
+    .stagger > *:nth-child(6) { animation-delay: 0.3s; }
+    .stagger > *:nth-child(7) { animation-delay: 0.35s; }
+    .stagger > *:nth-child(8) { animation-delay: 0.4s; }
+
+    /* ---- reveal on scroll ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- magnetic button ---- */
+    .magnetic { transition: transform 0.3s ease; }
+
+    /* ---- horizontal rule accent ---- */
+    .rule {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #6366F1, transparent);
+      border: none;
+    }
+
+    /* ---- skill ring ---- */
+    .skill-ring circle {
+      stroke-dasharray: 251;
+      stroke-dashoffset: 251;
+      transition: stroke-dashoffset 1.2s ease;
+    }
+    .skill-ring.visible circle {
+      animation: dash 1.5s ease forwards;
+    }
+
+    /* ---- project card ---- */
+    .project-card {
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+    .dark .project-card:hover {
+      box-shadow: 0 30px 80px -20px rgba(99,102,241,0.15);
+    }
+
+    /* ---- tag underline ---- */
+    .link-underline {
+      background-image: linear-gradient(#6366F1, #6366F1);
+      background-size: 0% 2px;
+      background-position: left bottom;
+      background-repeat: no-repeat;
+      transition: background-size 0.3s ease;
+    }
+    .link-underline:hover { background-size: 100% 2px; }
+
+    /* ---- marquee strip ---- */
+    .marquee-strip {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body class="noise bg-surface-50 dark:bg-surface-950 text-neutral-700 dark:text-neutral-300 transition-colors duration-500 grid-bg">
+  <div id="blob"></div>
+
+  <!-- ==================== SIDE NAV ==================== -->
+  <nav class="fixed left-0 top-0 h-full z-50 hidden lg:flex flex-col items-center justify-between py-8 w-16">
+    <a href="#hero" class="text-accent-500 font-bold text-lg tracking-tighter rotate-90 origin-center">KD</a>
+
+    <ul class="flex flex-col items-center gap-6">
+      <li><a href="#about" class="group flex items-center justify-center w-8 h-8 rounded-full border border-transparent hover:border-accent-500/30 transition" title="About">
+        <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600 group-hover:bg-accent-500 transition"></span>
+      </a></li>
+      <li><a href="#skills" class="group flex items-center justify-center w-8 h-8 rounded-full border border-transparent hover:border-accent-500/30 transition" title="Skills">
+        <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600 group-hover:bg-accent-500 transition"></span>
+      </a></li>
+      <li><a href="#projects" class="group flex items-center justify-center w-8 h-8 rounded-full border border-transparent hover:border-accent-500/30 transition" title="Projects">
+        <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600 group-hover:bg-accent-500 transition"></span>
+      </a></li>
+      <li><a href="#contact" class="group flex items-center justify-center w-8 h-8 rounded-full border border-transparent hover:border-accent-500/30 transition" title="Contact">
+        <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600 group-hover:bg-accent-500 transition"></span>
+      </a></li>
+    </ul>
+
+    <button id="themeToggle" class="w-8 h-8 rounded-full border border-neutral-300 dark:border-neutral-700 flex items-center justify-center hover:border-accent-500 transition" aria-label="Toggle theme">
+      <svg id="iconSun" class="w-4 h-4 hidden dark:block text-accent-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg id="iconMoon" class="w-4 h-4 block dark:hidden text-accent-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
+
+  <!-- ==================== MOBILE NAV ==================== -->
+  <nav class="lg:hidden fixed top-0 inset-x-0 z-50 flex items-center justify-between px-5 py-4 bg-surface-50/80 dark:bg-surface-950/80 backdrop-blur-md border-b border-neutral-200/50 dark:border-white/5">
+    <a href="#hero" class="text-accent-500 font-bold text-lg tracking-tighter">KD</a>
+    <div class="flex items-center gap-3">
+      <button id="themeToggleMobile" class="w-9 h-9 rounded-full border border-neutral-300 dark:border-neutral-700 flex items-center justify-center" aria-label="Toggle theme">
+        <svg class="w-4 h-4 hidden dark:block text-accent-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="w-4 h-4 block dark:hidden text-accent-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button id="mobileMenuBtn" class="w-9 h-9 rounded-full border border-neutral-300 dark:border-neutral-700 flex items-center justify-center" aria-label="Menu">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div id="mobileMenuPanel" class="lg:hidden fixed inset-0 z-40 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeMobileMenu()"></div>
+    <div class="absolute right-0 top-0 h-full w-64 bg-surface-50 dark:bg-surface-900 p-8 pt-20 flex flex-col gap-6 text-lg font-medium">
+      <a href="#about" onclick="closeMobileMenu()" class="hover:text-accent-500 transition">About</a>
+      <a href="#skills" onclick="closeMobileMenu()" class="hover:text-accent-500 transition">Skills</a>
+      <a href="#projects" onclick="closeMobileMenu()" class="hover:text-accent-500 transition">Projects</a>
+      <a href="#contact" onclick="closeMobileMenu()" class="hover:text-accent-500 transition">Contact</a>
+    </div>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="hero" class="relative min-h-screen flex items-center lg:pl-16">
+    <div class="max-w-6xl mx-auto px-6 py-32 w-full relative z-10">
+      <div class="flex flex-col gap-6">
+        <!-- Terminal-style intro -->
+        <div class="animate-slide-up inline-flex items-center gap-2 font-mono text-sm text-accent-500">
+          <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse"></span>
+          <span class="typewriter-text">~/kehinde &gt; building for the web</span>
+        </div>
+
+        <h1 class="animate-slide-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight dark:text-white text-neutral-900" style="animation-delay:0.2s">
+          I build things<br/>for the <span class="text-accent-500">web</span>.
+        </h1>
+
+        <p class="animate-slide-up max-w-xl text-lg md:text-xl text-neutral-500 dark:text-neutral-400 leading-relaxed" style="animation-delay:0.4s">
+          Full-stack developer experienced in building scalable web applications from concept to production, with a focus on clean architecture, reliable backend systems, and intuitive frontend experiences.
+        </p>
+
+        <div class="animate-slide-up flex flex-wrap gap-4 mt-4" style="animation-delay:0.6s">
+          <a href="#projects" class="magnetic group inline-flex items-center gap-3 px-7 py-3.5 bg-accent-500 text-white font-medium rounded-full hover:bg-accent-600 transition-colors">
+            See my work
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="magnetic inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-neutral-300 dark:border-neutral-700 hover:border-accent-500 dark:hover:border-accent-500 font-medium transition-colors">
+            Let's talk
+          </a>
+        </div>
+      </div>
+
+      <!-- Spinning badge -->
+      <div class="absolute right-6 bottom-12 md:right-12 md:bottom-20 hidden sm:block">
+        <div class="relative w-28 h-28 animate-spin-slow">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <defs>
+              <path id="circlePath" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/>
+            </defs>
+            <text class="fill-neutral-400 dark:fill-neutral-600" style="font-size:8.5px;font-family:'Space Grotesk';letter-spacing:3.5px">
+              <textPath href="#circlePath">SCROLL DOWN • EXPLORE MORE • </textPath>
+            </text>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg class="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MARQUEE STRIP ==================== -->
+  <div class="overflow-hidden py-8 border-y border-neutral-200/50 dark:border-white/5">
+    <div class="marquee-strip animate-marquee">
+      <span class="text-5xl font-bold text-neutral-200 dark:text-neutral-800 select-none">React.js &nbsp;&bull;&nbsp; Next.js &nbsp;&bull;&nbsp; TypeScript &nbsp;&bull;&nbsp; JavaScript &nbsp;&bull;&nbsp; Node.js &nbsp;&bull;&nbsp; Express.js &nbsp;&bull;&nbsp; Tailwind CSS &nbsp;&bull;&nbsp; MongoDB &nbsp;&bull;&nbsp; MySQL &nbsp;&bull;&nbsp; Firebase &nbsp;&bull;&nbsp; Vue.js &nbsp;&bull;&nbsp; Git &nbsp;&bull;&nbsp;</span>
+      <span class="text-5xl font-bold text-neutral-200 dark:text-neutral-800 select-none">React.js &nbsp;&bull;&nbsp; Next.js &nbsp;&bull;&nbsp; TypeScript &nbsp;&bull;&nbsp; JavaScript &nbsp;&bull;&nbsp; Node.js &nbsp;&bull;&nbsp; Express.js &nbsp;&bull;&nbsp; Tailwind CSS &nbsp;&bull;&nbsp; MongoDB &nbsp;&bull;&nbsp; MySQL &nbsp;&bull;&nbsp; Firebase &nbsp;&bull;&nbsp; Vue.js &nbsp;&bull;&nbsp; Git &nbsp;&bull;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about" class="py-28 lg:pl-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal grid lg:grid-cols-5 gap-16 items-start">
+        <!-- Left label -->
+        <div class="lg:col-span-2">
+          <p class="font-mono text-sm text-accent-500 mb-3">// 01</p>
+          <h2 class="text-4xl md:text-5xl font-bold dark:text-white text-neutral-900 leading-tight">
+            About<br/>me<span class="text-accent-500">.</span>
+          </h2>
+        </div>
+
+        <!-- Right content -->
+        <div class="lg:col-span-3 space-y-6">
+          <p class="text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
+            I'm Kehinde Daramola — a full-stack developer based in Lagos, Nigeria, with a B.Sc. in Computer Science from Ladoke Akintola University of Technology. I build scalable web applications from concept to production, with a focus on clean architecture and intuitive user experiences.
+          </p>
+          <p class="text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
+            From digital loyalty platforms with wallet integrations to AI-powered email security systems, I thrive on solving complex problems with elegant code. I believe great software is invisible — it just works.
+          </p>
+
+          <!-- Stats row -->
+          <div class="grid grid-cols-3 gap-6 pt-6 border-t border-neutral-200 dark:border-neutral-800">
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-accent-500">4+</p>
+              <p class="text-sm text-neutral-500 mt-1">Projects shipped</p>
+            </div>
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-accent-500">3+</p>
+              <p class="text-sm text-neutral-500 mt-1">Companies</p>
+            </div>
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-accent-500">3+</p>
+              <p class="text-sm text-neutral-500 mt-1">Years experience</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule max-w-6xl mx-auto lg:ml-16" />
+
+  <!-- ==================== SKILLS ==================== -->
+  <section id="skills" class="py-28 lg:pl-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal mb-16">
+        <p class="font-mono text-sm text-accent-500 mb-3">// 02</p>
+        <h2 class="text-4xl md:text-5xl font-bold dark:text-white text-neutral-900">
+          Tech stack<span class="text-accent-500">.</span>
+        </h2>
+      </div>
+
+      <!-- Bento grid -->
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4 stagger">
+
+        <!-- Large card -->
+        <div class="col-span-2 row-span-2 rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 p-8 flex flex-col justify-between hover:border-accent-500/30 transition-colors">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-accent-500/10 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6 text-accent-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>
+            </div>
+            <h3 class="text-xl font-bold dark:text-white mb-2">Frontend</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">Crafting responsive, performant UIs with modern frameworks. Pixel-perfect from Figma to browser.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-6">
+            <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-accent-500/5 dark:bg-accent-500/10 text-accent-500 border border-accent-500/10">React.js</span>
+            <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-accent-500/5 dark:bg-accent-500/10 text-accent-500 border border-accent-500/10">Next.js</span>
+            <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-accent-500/5 dark:bg-accent-500/10 text-accent-500 border border-accent-500/10">TypeScript</span>
+            <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-accent-500/5 dark:bg-accent-500/10 text-accent-500 border border-accent-500/10">Tailwind CSS</span>
+            <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-accent-500/5 dark:bg-accent-500/10 text-accent-500 border border-accent-500/10">Vue.js</span>
+            <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-accent-500/5 dark:bg-accent-500/10 text-accent-500 border border-accent-500/10">Nuxt.js</span>
+            <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-accent-500/5 dark:bg-accent-500/10 text-accent-500 border border-accent-500/10">Redux Toolkit</span>
+          </div>
+        </div>
+
+        <!-- Small card: Backend -->
+        <div class="rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 p-6 flex flex-col justify-between hover:border-accent-500/30 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-accent-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7"/></svg>
+          </div>
+          <h3 class="font-bold dark:text-white text-sm mb-1">Backend</h3>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">Node.js</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">Express.js</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">REST API</span>
+          </div>
+        </div>
+
+        <!-- Small card: Database -->
+        <div class="rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 p-6 flex flex-col justify-between hover:border-accent-500/30 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-accent-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>
+          </div>
+          <h3 class="font-bold dark:text-white text-sm mb-1">Database</h3>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">MongoDB</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">MySQL</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">Firebase</span>
+          </div>
+        </div>
+
+        <!-- Small card: DevOps -->
+        <div class="rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 p-6 flex flex-col justify-between hover:border-accent-500/30 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-accent-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 .75-7.425A4.502 4.502 0 0 0 14.25 7.5 5.25 5.25 0 0 0 4.08 13.354 4.489 4.489 0 0 0 2.25 15z"/></svg>
+          </div>
+          <h3 class="font-bold dark:text-white text-sm mb-1">Tools & APIs</h3>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">Git</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">Socket.io</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">JWT Auth</span>
+          </div>
+        </div>
+
+        <!-- Small card: Design -->
+        <div class="rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 p-6 flex flex-col justify-between hover:border-accent-500/30 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-accent-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42"/></svg>
+          </div>
+          <h3 class="font-bold dark:text-white text-sm mb-1">Integrations</h3>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">Apple Wallet</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">Google Pay</span>
+            <span class="text-[10px] font-mono px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">EmailJS</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule max-w-6xl mx-auto lg:ml-16" />
+
+  <!-- ==================== PROJECTS ==================== -->
+  <section id="projects" class="py-28 lg:pl-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal mb-16">
+        <p class="font-mono text-sm text-accent-500 mb-3">// 03</p>
+        <h2 class="text-4xl md:text-5xl font-bold dark:text-white text-neutral-900">
+          Selected work<span class="text-accent-500">.</span>
+        </h2>
+      </div>
+
+      <div class="space-y-8">
+
+        <!-- Project 1 -->
+        <div class="reveal project-card rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+          <div class="grid md:grid-cols-2">
+            <div class="h-64 md:h-auto bg-gradient-to-br from-accent-500/20 via-accent-600/10 to-transparent flex items-center justify-center relative">
+              <span class="font-mono text-8xl font-bold text-accent-500/10">01</span>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-20 h-20 rounded-2xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-accent-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 md:p-10 flex flex-col justify-center">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-accent-500/20 text-accent-500">Next.js 15</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-accent-500/20 text-accent-500">TypeScript</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-accent-500/20 text-accent-500">MongoDB</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-accent-500/20 text-accent-500">Redux Toolkit</span>
+              </div>
+              <h3 class="text-2xl font-bold dark:text-white mb-3">MyPocketPerks</h3>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-6">Full-stack digital loyalty platform allowing businesses to create and distribute passes to Google Wallet and Apple Wallet. Features JWT auth, RESTful APIs, webhook endpoints, QR-based pass generation, and geospatial database indexing.</p>
+              <div class="flex gap-4">
+                <a href="https://www.mypocketperks.com/" target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-2 text-sm font-medium text-accent-500">
+                  Live Site <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="reveal project-card rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+          <div class="grid md:grid-cols-2">
+            <div class="h-64 md:h-auto bg-gradient-to-br from-purple-500/15 via-pink-500/10 to-transparent flex items-center justify-center relative order-last md:order-first">
+              <span class="font-mono text-8xl font-bold text-purple-500/10">02</span>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-20 h-20 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 md:p-10 flex flex-col justify-center">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-purple-400/20 text-purple-400">Next.js</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-purple-400/20 text-purple-400">TypeScript</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-purple-400/20 text-purple-400">Analytics</span>
+              </div>
+              <h3 class="text-2xl font-bold dark:text-white mb-3">SoS Email Security</h3>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-6">AI-powered email threat detection platform with team management, admin dashboard, security analytics, Google/Microsoft SSO, email categorization, and usage quota management. Built with browser extension support.</p>
+              <div class="flex gap-4">
+                <a href="https://soemailsecurity.com/" target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-2 text-sm font-medium text-accent-500">
+                  Live Site <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="reveal project-card rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+          <div class="grid md:grid-cols-2">
+            <div class="h-64 md:h-auto bg-gradient-to-br from-emerald-500/15 via-teal-500/10 to-transparent flex items-center justify-center relative">
+              <span class="font-mono text-8xl font-bold text-emerald-500/10">03</span>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 md:p-10 flex flex-col justify-center">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">Redux Toolkit</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">RTK Query</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">Socket.io</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">TypeScript</span>
+              </div>
+              <h3 class="text-2xl font-bold dark:text-white mb-3">Direct Verified Worker</h3>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-6">Job marketplace with geolocation-based worker discovery, real-time Socket.io chat, debounced search &amp; filter systems, and pixel-perfect Figma-to-code implementation. Built with modular component architecture and ARIA accessibility.</p>
+              <div class="flex gap-4">
+                <a href="https://dvworkers.com/" target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-2 text-sm font-medium text-accent-500">
+                  Live Site <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="reveal project-card rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+          <div class="grid md:grid-cols-2">
+            <div class="h-64 md:h-auto bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-transparent flex items-center justify-center relative order-last md:order-first">
+              <span class="font-mono text-8xl font-bold text-amber-500/10">04</span>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-20 h-20 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09zM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-8 md:p-10 flex flex-col justify-center">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-amber-400/20 text-amber-400">Nuxt.js 3</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-amber-400/20 text-amber-400">TypeScript</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-amber-400/20 text-amber-400">Tailwind CSS</span>
+              </div>
+              <h3 class="text-2xl font-bold dark:text-white mb-3">Treesoft Agency Website</h3>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-6">Modern agency website with custom dark/light theme system, AOS animations, EmailJS integration, SSR for SEO, Nuxt Image optimization with WebP/AVIF support, and a custom design system with Nunito Sans typography.</p>
+              <div class="flex gap-4">
+                <a href="https://treesoft.ng/" target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-2 text-sm font-medium text-accent-500">
+                  Live Site <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule max-w-6xl mx-auto lg:ml-16" />
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contact" class="py-28 lg:pl-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal grid lg:grid-cols-5 gap-16">
+        <!-- Left -->
+        <div class="lg:col-span-2">
+          <p class="font-mono text-sm text-accent-500 mb-3">// 04</p>
+          <h2 class="text-4xl md:text-5xl font-bold dark:text-white text-neutral-900 leading-tight">
+            Let's work<br/>together<span class="text-accent-500">.</span>
+          </h2>
+          <p class="text-neutral-500 dark:text-neutral-400 mt-4 leading-relaxed">
+            Got a project in mind? I'm always open to new opportunities and interesting conversations.
+          </p>
+
+          <!-- Contact info -->
+          <div class="mt-8 space-y-4">
+            <a href="mailto:daramolakehinde339@gmail.com" class="flex items-center gap-3 text-sm text-neutral-500 hover:text-accent-500 transition group">
+              <div class="w-10 h-10 rounded-xl border border-neutral-200 dark:border-neutral-800 flex items-center justify-center group-hover:border-accent-500/30 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+              </div>
+              daramolakehinde339@gmail.com
+            </a>
+            <a href="tel:+2347070693644" class="flex items-center gap-3 text-sm text-neutral-500 hover:text-accent-500 transition group">
+              <div class="w-10 h-10 rounded-xl border border-neutral-200 dark:border-neutral-800 flex items-center justify-center group-hover:border-accent-500/30 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"/></svg>
+              </div>
+              +234 707 069 3644
+            </a>
+            <div class="flex items-center gap-3 text-sm text-neutral-500">
+              <div class="w-10 h-10 rounded-xl border border-neutral-200 dark:border-neutral-800 flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
+              </div>
+              Surulere, Lagos, Nigeria
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="lg:col-span-3">
+          <form id="contactForm" onsubmit="handleSubmit(event)" class="rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 p-8 md:p-10 space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-wider">Name</label>
+                <input type="text" name="from_name" required placeholder="Jane Doe"
+                  class="w-full px-4 py-3 rounded-xl bg-surface-50 dark:bg-surface-900 border border-neutral-200 dark:border-neutral-800 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition text-sm dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600" />
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-wider">Email</label>
+                <input type="email" name="from_email" required placeholder="jane@example.com"
+                  class="w-full px-4 py-3 rounded-xl bg-surface-50 dark:bg-surface-900 border border-neutral-200 dark:border-neutral-800 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition text-sm dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-wider">Subject</label>
+              <input type="text" name="subject" required placeholder="Project collaboration"
+                class="w-full px-4 py-3 rounded-xl bg-surface-50 dark:bg-surface-900 border border-neutral-200 dark:border-neutral-800 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition text-sm dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600" />
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-wider">Message</label>
+              <textarea rows="5" name="message" required placeholder="Tell me about your project..."
+                class="w-full px-4 py-3 rounded-xl bg-surface-50 dark:bg-surface-900 border border-neutral-200 dark:border-neutral-800 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition text-sm dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600 resize-none"></textarea>
+            </div>
+            <!-- Status message -->
+            <p id="formStatus" class="text-sm text-center hidden"></p>
+            <button type="submit" id="submitBtn"
+              class="w-full py-3.5 bg-accent-500 text-white font-medium rounded-xl hover:bg-accent-600 transition-colors text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-neutral-200 dark:border-neutral-800 py-8 lg:pl-16">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-neutral-500">&copy; 2026 <span class="font-medium text-accent-500">Kehinde Daramola</span>. All rights reserved.</p>
+      <p class="text-sm text-neutral-500 font-mono">Built with precision.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    // ---- Theme toggle ----
+    const html = document.documentElement;
+    const stored = localStorage.getItem('theme-v2');
+    if (stored === 'light') html.classList.remove('dark');
+
+    function toggleTheme() {
+      html.classList.toggle('dark');
+      localStorage.setItem('theme-v2', html.classList.contains('dark') ? 'dark' : 'light');
+    }
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+    // ---- Cursor blob ----
+    const blob = document.getElementById('blob');
+    document.addEventListener('mousemove', (e) => {
+      blob.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+    });
+
+    // ---- Mobile menu ----
+    const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      mobileMenuPanel.classList.toggle('hidden');
+    });
+    function closeMobileMenu() {
+      mobileMenuPanel.classList.add('hidden');
+    }
+
+    // ---- Scroll reveal ----
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ---- Smooth scroll ----
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // ---- Magnetic buttons ----
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    // ---- EmailJS Init ----
+    // TODO: Replace these with your actual EmailJS credentials
+    // 1. Sign up at https://www.emailjs.com/
+    // 2. Add Gmail service → get SERVICE_ID
+    // 3. Create email template with variables: {{from_name}}, {{from_email}}, {{subject}}, {{message}}
+    // 4. Get your PUBLIC_KEY from Account → API Keys
+    const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+    const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
+    // ---- Form submit ----
+    function handleSubmit(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('submitBtn');
+      const status = document.getElementById('formStatus');
+      const form = e.target;
+
+      // Disable button and show loading
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.classList.add('hidden');
+
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+        .then(() => {
+          // Success
+          btn.textContent = 'Message Sent!';
+          btn.classList.add('bg-emerald-500');
+          btn.classList.remove('bg-accent-500');
+          status.textContent = "Thanks! I'll get back to you soon.";
+          status.className = 'text-sm text-center text-emerald-500';
+          form.reset();
+
+          setTimeout(() => {
+            btn.textContent = 'Send Message';
+            btn.classList.remove('bg-emerald-500');
+            btn.classList.add('bg-accent-500');
+            btn.disabled = false;
+            status.classList.add('hidden');
+          }, 4000);
+        })
+        .catch((error) => {
+          // Error
+          btn.textContent = 'Failed — Try Again';
+          btn.classList.add('bg-red-500');
+          btn.classList.remove('bg-accent-500');
+          status.textContent = 'Something went wrong. Please email me directly.';
+          status.className = 'text-sm text-center text-red-400';
+
+          setTimeout(() => {
+            btn.textContent = 'Send Message';
+            btn.classList.remove('bg-red-500');
+            btn.classList.add('bg-accent-500');
+            btn.disabled = false;
+          }, 4000);
+        });
+    }
+  </script>
+</body>
+</html>
