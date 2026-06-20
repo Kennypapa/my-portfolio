@@ -323,7 +323,7 @@
 
   <!-- ==================== SIDE NAV ==================== -->
   <nav class="fixed left-0 top-0 h-full z-50 hidden lg:flex flex-col items-center justify-between py-8 w-16">
-    <a href="#hero" class="text-accent-500 font-bold text-lg tracking-tighter rotate-90 origin-center">KD</a>
+    <a href="#hero" class="text-accent-500 font-bold text-lg tracking-tighter rotate-90 origin-center whitespace-nowrap" title="Kehinde Daramola">KD</a>
 
     <ul class="flex flex-col items-center gap-6">
       <li><a href="#about" class="group flex items-center justify-center w-8 h-8 rounded-full border border-transparent hover:border-accent-500/30 transition" title="About">
@@ -348,7 +348,7 @@
 
   <!-- ==================== MOBILE NAV ==================== -->
   <nav class="lg:hidden fixed top-0 inset-x-0 z-50 flex items-center justify-between px-4 sm:px-5 py-3 sm:py-4 pt-[max(0.75rem,env(safe-area-inset-top))] bg-surface-50/80 dark:bg-surface-950/80 backdrop-blur-md border-b border-neutral-200/50 dark:border-white/5">
-    <a href="#hero" class="text-accent-500 font-bold text-lg tracking-tighter">KD</a>
+    <a href="#hero" class="text-accent-500 font-bold text-sm sm:text-base tracking-tight truncate max-w-[min(100%,12rem)] sm:max-w-none" title="Kehinde Daramola">Kehinde Daramola</a>
     <div class="flex items-center gap-3">
       <button id="themeToggleMobile" class="w-9 h-9 rounded-full border border-neutral-300 dark:border-neutral-700 flex items-center justify-center" aria-label="Toggle theme">
         <svg class="w-4 h-4 hidden dark:block text-accent-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -388,7 +388,19 @@
             <p>From UI to API to deployment, I focus on shipping complete, production-ready features.</p>
           </div>
 
-          <div class="animate-slide-up flex flex-col gap-6 sm:gap-8 mt-6 sm:mt-8 max-w-2xl" style="animation-delay:0.5s">
+          <div class="animate-slide-up max-w-2xl" style="animation-delay:0.45s">
+            <div class="flex items-center gap-2 mb-3 sm:mb-3.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" aria-hidden="true"></span>
+              <p class="text-sm sm:text-base font-medium text-neutral-700 dark:text-neutral-300">Available for</p>
+            </div>
+            <div class="flex flex-wrap gap-2 sm:gap-3">
+              <span class="inline-flex items-center text-xs sm:text-sm font-mono px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-emerald-400/25 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400">Remote</span>
+              <span class="inline-flex items-center text-xs sm:text-sm font-mono px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-accent-400/20 bg-accent-500/5 text-accent-600 dark:text-accent-400">Contract</span>
+              <span class="inline-flex items-center text-xs sm:text-sm font-mono px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-sky-400/25 bg-sky-500/5 text-sky-600 dark:text-sky-400">Full-time</span>
+            </div>
+          </div>
+
+          <div class="animate-slide-up flex flex-col gap-6 sm:gap-8 mt-4 sm:mt-6 max-w-2xl" style="animation-delay:0.5s">
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <a href="#projects" class="magnetic group inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3 sm:py-3.5 bg-accent-500 text-white font-medium rounded-full hover:bg-accent-600 transition-colors text-sm sm:text-base w-full sm:w-auto">
                 Explore Projects
@@ -475,8 +487,8 @@
           <p class="text-base sm:text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
             What excites me most about software development is turning ideas into products people can actually use. I care about writing clean, maintainable code, creating thoughtful user experiences, and building systems that are reliable in the real world.
           </p>
-          <p class="text-base sm:text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
-            I believe the best software doesn't draw attention to itself, it simply works.
+          <p class="text-base sm:text-lg leading-relaxed text-neutral-700 dark:text-neutral-300 font-medium border-l-2 border-accent-500 pl-4 sm:pl-5">
+            Give me a problem, a product goal, and a codebase — I enjoy figuring out the rest.
           </p>
 
           <!-- Stats row -->
@@ -618,7 +630,7 @@
       <div class="reveal mb-10 sm:mb-16">
         <p class="font-mono text-sm text-accent-500 mb-3">// 03</p>
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold dark:text-white text-neutral-900">
-          Selected work<span class="text-accent-500">.</span>
+          Featured projects<span class="text-accent-500">.</span>
         </h2>
       </div>
 
@@ -642,7 +654,7 @@
                 <span class="text-xs font-mono px-3 py-1 rounded-full border border-purple-400/20 text-purple-400">Full Stack Engineering</span>
               </div>
               <h3 class="text-xl sm:text-2xl font-bold dark:text-white mb-2 sm:mb-3">Ṣọ Email Security</h3>
-              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">AI-powered email threat detection platform designed to help organizations detect, categorize, and manage email threats.</p>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">Full-stack email security platform — contributed to authentication, billing, team management, analytics dashboards, and security monitoring features.</p>
               <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <button type="button" onclick="openProjectModal('soe')" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-purple-500/10 border border-purple-400/20 text-sm font-medium text-purple-400 hover:bg-purple-500/20 transition-colors w-full sm:w-auto">
                   My contributions
@@ -671,10 +683,10 @@
             </div>
             <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
               <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
-                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">Frontend Engineering</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">Software Engineering</span>
               </div>
               <h3 class="text-xl sm:text-2xl font-bold dark:text-white mb-2 sm:mb-3">Direct Verified Workers</h3>
-              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">A multi-role marketplace connecting employers with domestic workers — authentication, hiring workflows, KYC, messaging, and payments in React and TypeScript.</p>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">Multi-role job marketplace connecting employers with domestic workers — built authentication, onboarding, worker discovery, KYC verification, messaging, and payment workflows using React and TypeScript.</p>
               <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <button type="button" onclick="openProjectModal('dvw')" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-sm font-medium text-emerald-400 hover:bg-emerald-500/20 transition-colors w-full sm:w-auto">
                   My contributions
@@ -816,12 +828,12 @@
             <div class="grid sm:grid-cols-2 gap-5">
               <div>
                 <label class="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-wider">Name</label>
-                <input type="text" name="from_name" required placeholder="Jane Doe"
+                <input type="text" name="from_name" required
                   class="w-full px-4 py-3 rounded-xl bg-surface-50 dark:bg-surface-900 border border-neutral-200 dark:border-neutral-800 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition text-sm dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600" />
               </div>
               <div>
                 <label class="block text-xs font-mono text-neutral-500 mb-2 uppercase tracking-wider">Email</label>
-                <input type="email" name="from_email" required placeholder="jane@example.com"
+                <input type="email" name="from_email" required
                   class="w-full px-4 py-3 rounded-xl bg-surface-50 dark:bg-surface-900 border border-neutral-200 dark:border-neutral-800 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition text-sm dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600" />
               </div>
             </div>
@@ -873,7 +885,7 @@
         <div class="rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
           <img src="assets/sos-email-security.png" alt="" class="w-full h-36 sm:h-48 md:h-56 object-cover object-center" />
         </div>
-        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">AI-powered email threat detection platform designed to help organizations detect, categorize, and manage email threats.</p>
+        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Full-stack email security platform — contributed to authentication, billing, team management, analytics dashboards, and security monitoring features.</p>
         <div>
           <p class="text-sm font-medium dark:text-white text-neutral-800 mb-2 sm:mb-3">My contributions</p>
           <ul class="modal-contributions text-neutral-500 dark:text-neutral-400 text-sm sm:text-[0.9375rem] leading-relaxed space-y-3 sm:space-y-3.5 list-disc pl-4 sm:pl-5 marker:text-purple-400">
@@ -914,7 +926,7 @@
       <div class="modal-handle sm:hidden" aria-hidden="true"></div>
       <div class="shrink-0 flex items-start sm:items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-surface-800 sm:rounded-t-3xl">
         <div class="min-w-0 pr-2">
-          <p class="text-xs font-mono text-emerald-400 mb-1">Frontend Engineering</p>
+          <p class="text-xs font-mono text-emerald-400 mb-1">Software Engineering</p>
           <h3 class="text-lg sm:text-xl font-bold dark:text-white truncate">Direct Verified Workers</h3>
         </div>
         <button type="button" onclick="closeProjectModal('dvw')" class="shrink-0 w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-700 flex items-center justify-center hover:border-emerald-400/40 transition-colors touch-manipulation" aria-label="Close">
@@ -925,12 +937,13 @@
         <div class="rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
           <img src="assets/direct-verified-worker.png" alt="" class="w-full h-36 sm:h-48 md:h-56 object-cover object-center" />
         </div>
-        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">A multi-role marketplace connecting employers with domestic workers — authentication, hiring workflows, KYC, messaging, and payments in React and TypeScript.</p>
+        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Multi-role job marketplace connecting employers with domestic workers — built authentication, onboarding, worker discovery, KYC verification, messaging, and payment workflows using React and TypeScript.</p>
         <div>
           <p class="text-sm font-medium dark:text-white text-neutral-800 mb-2 sm:mb-3">My contributions</p>
           <ul class="modal-contributions text-neutral-500 dark:text-neutral-400 text-sm sm:text-[0.9375rem] leading-relaxed space-y-3 sm:space-y-3.5 list-disc pl-4 sm:pl-5 marker:text-emerald-400">
-            <li>Led frontend development of Direct Verified Workers, a multi-role marketplace connecting employers with domestic workers, owning the React/TypeScript client from setup through production-ready employer, worker, and admin experiences.</li>
-            <li>Built secure multi-role authentication and onboarding flows using React state management and side-effect handling (useEffect patterns), supporting Google OAuth, email verification gating, and role-based routing for clean dashboard access.</li>
+            <li>Built and maintained a production backend serving a multi-role worker marketplace, delivering APIs for worker discovery, profile management, KYC verification, reviews, bookmarking, and administrative reporting.</li>
+            <li>Engineered authentication and security workflows using JWT-based authorization, role-based access control, OAuth integrations, email verification, SMS OTP recovery, and encrypted storage of sensitive user data.</li>
+            <li>Built secure multi-role authentication and onboarding flows on the React/TypeScript client, including Google OAuth, email verification gating, and role-based routing for employer, worker, and admin dashboards.</li>
             <li>Developed employer hiring workflows including worker search, filtering, bookmarks, public profiles, and profile gating, handling dynamic UI states, async API loading, and conditional rendering for authenticated vs unauthenticated users.</li>
             <li>Shipped worker profile and verification system covering KYC, availability, service categories, resume data, and public profiles, managing complex form state, file uploads, and API-driven updates across multiple UI sections.</li>
             <li>Implemented core platform features including real-time messaging between employers and workers and Paystack payment integration, coordinating Redux Toolkit state, RTK Query data fetching, and side-effect-driven UI updates.</li>
