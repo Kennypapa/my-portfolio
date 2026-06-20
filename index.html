@@ -274,6 +274,31 @@
       }
     }
 
+    /* ---- profile photo ---- */
+    .profile-photo {
+      object-position: center 12%;
+      image-rendering: auto;
+    }
+    .profile-frame::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 0.75rem;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(99,102,241,0.08) 50%, rgba(99,102,241,0.2));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .profile-glow {
+      box-shadow: 0 12px 32px -16px rgba(99, 102, 241, 0.28);
+    }
+    html:not(.dark) .profile-glow {
+      box-shadow: 0 12px 32px -16px rgba(99, 102, 241, 0.15);
+    }
+
     /* ---- tag underline ---- */
     .link-underline {
       background-image: linear-gradient(#6366F1, #6366F1);
@@ -348,30 +373,46 @@
   <section id="hero" class="relative min-h-[100dvh] flex items-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-0 lg:pb-0 lg:pl-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 lg:py-32 w-full relative z-10">
       <div class="flex flex-col gap-4 sm:gap-6">
-        <!-- Terminal-style intro -->
-        <div class="animate-slide-up inline-flex items-start sm:items-center gap-2 font-mono text-xs sm:text-sm text-accent-500 max-w-full">
-          <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse shrink-0 mt-1.5 sm:mt-0"></span>
-          <span class="typewriter-text">~/kehinde &gt; design · build · ship</span>
-        </div>
+          <!-- Terminal-style intro -->
+          <div class="animate-slide-up inline-flex items-start sm:items-center gap-2 font-mono text-xs sm:text-sm text-accent-500 max-w-full">
+            <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse shrink-0 mt-1.5 sm:mt-0"></span>
+            <span class="typewriter-text">~/kehinde &gt; design · build · ship</span>
+          </div>
 
-        <h1 class="animate-slide-up text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1] sm:leading-[0.95] tracking-tight dark:text-white text-neutral-900" style="animation-delay:0.2s">
-          Designing. Building.<br/><span class="text-accent-500">Shipping.</span>
-        </h1>
+          <h1 class="animate-slide-up text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1] sm:leading-[0.95] tracking-tight dark:text-white text-neutral-900" style="animation-delay:0.2s">
+            Designing. Building.<br/><span class="text-accent-500">Shipping.</span>
+          </h1>
 
-        <div class="animate-slide-up max-w-2xl flex flex-col gap-3 sm:gap-4 text-base sm:text-lg md:text-xl text-neutral-500 dark:text-neutral-400 leading-relaxed" style="animation-delay:0.4s">
-          <p>Full-stack software engineer with experience building production-ready web applications, secure backend systems, and modern user experiences.</p>
-          <p>From UI to API to deployment, I focus on shipping complete, production-ready features.</p>
-        </div>
+          <div class="animate-slide-up max-w-2xl flex flex-col gap-3 sm:gap-4 text-base sm:text-lg md:text-xl text-neutral-500 dark:text-neutral-400 leading-relaxed" style="animation-delay:0.4s">
+            <p>Full-stack software engineer with experience building production-ready web applications, secure backend systems, and modern user experiences.</p>
+            <p>From UI to API to deployment, I focus on shipping complete, production-ready features.</p>
+          </div>
 
-        <div class="animate-slide-up flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-2 sm:mt-4 w-full sm:w-auto" style="animation-delay:0.6s">
-          <a href="#projects" class="magnetic group inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3 sm:py-3.5 bg-accent-500 text-white font-medium rounded-full hover:bg-accent-600 transition-colors text-sm sm:text-base w-full sm:w-auto">
-            Explore Projects
-            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#contact" class="magnetic inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border border-neutral-300 dark:border-neutral-700 hover:border-accent-500 dark:hover:border-accent-500 font-medium transition-colors text-sm sm:text-base w-full sm:w-auto">
-            Let's talk
-          </a>
-        </div>
+          <div class="animate-slide-up flex flex-col gap-6 sm:gap-8 mt-6 sm:mt-8 max-w-2xl" style="animation-delay:0.5s">
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a href="#projects" class="magnetic group inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3 sm:py-3.5 bg-accent-500 text-white font-medium rounded-full hover:bg-accent-600 transition-colors text-sm sm:text-base w-full sm:w-auto">
+                Explore Projects
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+              <a href="#contact" class="magnetic inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border border-neutral-300 dark:border-neutral-700 hover:border-accent-500 dark:hover:border-accent-500 font-medium transition-colors text-sm sm:text-base w-full sm:w-auto">
+                Let's talk
+              </a>
+            </div>
+
+            <div class="pt-6 sm:pt-7 border-t border-neutral-200/80 dark:border-neutral-800/80">
+              <p class="text-xs font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider mb-4">Connect</p>
+              <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <a href="https://github.com/Kennypapa" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full bg-[#24292e] text-white text-sm font-medium hover:bg-[#1b1f23] transition-colors w-full sm:w-auto">
+                  <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.395-.135-.345-.72-1.395-1.23-1.665-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                  GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/kehinde-daramola-06b55031a/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full bg-[#0A66C2] text-white text-sm font-medium hover:bg-[#004182] transition-colors w-full sm:w-auto">
+                  <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
       </div>
 
       <!-- Spinning badge -->
@@ -405,12 +446,22 @@
   <section id="about" class="py-16 sm:py-24 lg:py-28 lg:pl-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="reveal grid lg:grid-cols-5 gap-10 sm:gap-12 lg:gap-16 items-start">
-        <!-- Left label -->
+        <!-- Left label + photo -->
         <div class="lg:col-span-2">
           <p class="font-mono text-sm text-accent-500 mb-3">// 01</p>
           <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold dark:text-white text-neutral-900 leading-tight">
             About<br/>me<span class="text-accent-500">.</span>
           </h2>
+          <div class="profile-frame profile-glow relative mt-6 sm:mt-8 w-32 sm:w-36">
+            <img
+              src="assets/profile.png"
+              alt="Kehinde Daramola"
+              width="144"
+              height="144"
+              class="profile-photo w-full aspect-square object-cover rounded-xl border border-neutral-200/80 dark:border-neutral-700/80 bg-neutral-100 dark:bg-neutral-900"
+              loading="lazy"
+            />
+          </div>
         </div>
 
         <!-- Right content -->
@@ -594,7 +645,7 @@
               <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">AI-powered email threat detection platform designed to help organizations detect, categorize, and manage email threats.</p>
               <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <button type="button" onclick="openProjectModal('soe')" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-purple-500/10 border border-purple-400/20 text-sm font-medium text-purple-400 hover:bg-purple-500/20 transition-colors w-full sm:w-auto">
-                  View details
+                  My contributions
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
                 </button>
                 <a href="https://soemailsecurity.com/" target="_blank" rel="noopener" class="link-underline inline-flex items-center justify-center gap-2 text-sm font-medium text-accent-500 w-full sm:w-auto">
@@ -611,7 +662,7 @@
             <div class="project-preview relative h-48 sm:h-56 md:h-auto md:min-h-[280px] lg:min-h-[320px] overflow-hidden bg-[#0f1a2e]">
               <img
                 src="assets/direct-verified-worker.png"
-                alt="Direct Verified Worker homepage — connect with verified workers in your area"
+                alt="Direct Verified Workers homepage — connect with verified workers in your area"
                 class="absolute inset-0 w-full h-full object-cover object-center"
                 loading="lazy"
               />
@@ -620,13 +671,13 @@
             </div>
             <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
               <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
-                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">Full Stack Engineering</span>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-400/20 text-emerald-400">Frontend Engineering</span>
               </div>
-              <h3 class="text-xl sm:text-2xl font-bold dark:text-white mb-2 sm:mb-3">Direct Verified Worker</h3>
-              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">A job marketplace platform connecting employers with verified workers through search, messaging, onboarding, and profile management workflows.</p>
+              <h3 class="text-xl sm:text-2xl font-bold dark:text-white mb-2 sm:mb-3">Direct Verified Workers</h3>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">A multi-role marketplace connecting employers with domestic workers — authentication, hiring workflows, KYC, messaging, and payments in React and TypeScript.</p>
               <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <button type="button" onclick="openProjectModal('dvw')" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-sm font-medium text-emerald-400 hover:bg-emerald-500/20 transition-colors w-full sm:w-auto">
-                  View details
+                  My contributions
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
                 </button>
                 <a href="https://dvworkers.com/" target="_blank" rel="noopener" class="link-underline inline-flex items-center justify-center gap-2 text-sm font-medium text-accent-500 w-full sm:w-auto">
@@ -640,13 +691,15 @@
         <!-- Project 3 -->
         <div class="reveal project-card rounded-2xl sm:rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
           <div class="grid md:grid-cols-2 md:items-stretch">
-            <div class="h-48 sm:h-56 md:h-auto md:min-h-[280px] lg:min-h-[320px] bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-transparent flex items-center justify-center relative order-last md:order-first">
-              <span class="font-mono text-8xl font-bold text-amber-500/10">03</span>
-              <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-20 h-20 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-                  <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09zM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456z"/></svg>
-                </div>
-              </div>
+            <div class="project-preview relative h-48 sm:h-56 md:h-auto md:min-h-[280px] lg:min-h-[320px] overflow-hidden bg-[#0a140a] order-last md:order-first">
+              <img
+                src="assets/treesoft.png"
+                alt="Treesoft Agency homepage — top-notch software solutions for businesses"
+                class="absolute inset-0 w-full h-full object-cover object-center"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent pointer-events-none"></div>
+              <span class="absolute top-5 left-5 font-mono text-sm font-medium text-white/30">03</span>
             </div>
             <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
               <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
@@ -656,7 +709,7 @@
               <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">Modern agency website with a custom design system, dark/light theme switching, EmailJS integration, and performance-focused Nuxt.js implementation.</p>
               <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <button type="button" onclick="openProjectModal('treesoft')" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-amber-500/10 border border-amber-400/20 text-sm font-medium text-amber-400 hover:bg-amber-500/20 transition-colors w-full sm:w-auto">
-                  View details
+                  My contributions
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
                 </button>
                 <a href="https://treesoft.ng/" target="_blank" rel="noopener" class="link-underline inline-flex items-center justify-center gap-2 text-sm font-medium text-accent-500 w-full sm:w-auto">
@@ -670,13 +723,15 @@
         <!-- Project 4 -->
         <div class="reveal project-card rounded-2xl sm:rounded-3xl bg-white dark:bg-surface-800/50 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
           <div class="grid md:grid-cols-2 md:items-stretch">
-            <div class="h-48 sm:h-56 md:h-auto md:min-h-[280px] lg:min-h-[320px] bg-gradient-to-br from-sky-500/15 via-cyan-500/10 to-transparent flex items-center justify-center relative order-last md:order-first">
-              <span class="font-mono text-8xl font-bold text-sky-500/10">04</span>
-              <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-20 h-20 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center">
-                  <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0z"/></svg>
-                </div>
-              </div>
+            <div class="project-preview relative h-48 sm:h-56 md:h-auto md:min-h-[280px] lg:min-h-[320px] overflow-hidden bg-[#1a2e1a] order-last md:order-first">
+              <img
+                src="assets/bai-innovations.png"
+                alt="BAI Innovations homepage — energy intelligence that moves your business forward"
+                class="absolute inset-0 w-full h-full object-cover object-center"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent pointer-events-none"></div>
+              <span class="absolute top-5 left-5 font-mono text-sm font-medium text-white/30">04</span>
             </div>
             <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
               <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
@@ -684,12 +739,15 @@
               </div>
               <h3 class="text-xl sm:text-2xl font-bold dark:text-white mb-1">BAI Innovations</h3>
               <p class="text-xs font-mono text-neutral-500 mb-2 sm:mb-3">Contract</p>
-              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">Renewable energy portfolio management platform — corporate website frontend for the Zenova APP ecosystem, with product showcases, support flows, and demo request experiences.</p>
+              <p class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-5 sm:mb-6">Corporate website for an energy intelligence company — unified monitoring, sustainability insights, and product platforms including Zenova and Ecosnap.</p>
               <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <button type="button" onclick="openProjectModal('bai')" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-sky-500/10 border border-sky-400/20 text-sm font-medium text-sky-400 hover:bg-sky-500/20 transition-colors w-full sm:w-auto">
-                  View details
+                  My contributions
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
                 </button>
+                <a href="https://bainnovations.ca/" target="_blank" rel="noopener" class="link-underline inline-flex items-center justify-center gap-2 text-sm font-medium text-accent-500 w-full sm:w-auto">
+                  Live Site <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+                </a>
               </div>
             </div>
           </div>
@@ -734,6 +792,20 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
               </div>
               Surulere, Lagos, Nigeria
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-800">
+            <p class="text-xs font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider mb-4">Connect</p>
+            <div class="flex flex-wrap gap-3">
+              <a href="https://github.com/Kennypapa" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#24292e] text-white text-sm font-medium hover:bg-[#1b1f23] transition-colors">
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.395-.135-.345-.72-1.395-1.23-1.665-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/kehinde-daramola-06b55031a/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#0A66C2] text-white text-sm font-medium hover:bg-[#004182] transition-colors">
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </a>
             </div>
           </div>
         </div>
@@ -804,11 +876,16 @@
         <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">AI-powered email threat detection platform designed to help organizations detect, categorize, and manage email threats.</p>
         <div>
           <p class="text-sm font-medium dark:text-white text-neutral-800 mb-2 sm:mb-3">My contributions</p>
-          <ul class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed space-y-2 sm:space-y-2.5 list-disc pl-4 sm:pl-5 marker:text-purple-400">
-            <li>Built and maintained full-stack features using Next.js, TypeScript, Node.js, and PostgreSQL.</li>
-            <li>Developed authentication and user management with Google and Microsoft SSO integration.</li>
-            <li>Built security analytics dashboards, email categorization, and usage quota management.</li>
-            <li>Integrated REST APIs and backend services for threat detection, reporting, and admin operations.</li>
+          <ul class="modal-contributions text-neutral-500 dark:text-neutral-400 text-sm sm:text-[0.9375rem] leading-relaxed space-y-3 sm:space-y-3.5 list-disc pl-4 sm:pl-5 marker:text-purple-400">
+            <li>Built full account lifecycle flows (authentication, account deletion), accounting for different user situations around active subscriptions so users could safely exit the platform without breaking billing state or leaving leftover data.</li>
+            <li>Implemented IMAP and OAuth authentication to support multiple email providers beyond Google/Microsoft, improving onboarding for users with non-standard email setups.</li>
+            <li>Refactored browser extension authentication into a centralized global handler, removing duplicated logic and fixing inconsistent login states between the extension and main dashboard.</li>
+            <li>Built team management features including invitations, role-based access, and member management, allowing admins to properly control team structure and permissions.</li>
+            <li>Implemented SaaS billing flows including seat-based pricing, subscription state handling, billing portal integration, and invoice/receipt visibility for both users and admins.</li>
+            <li>Built security dashboards for breach monitoring and threat analytics, connecting backend security data to real-time UI so users could actually understand exposure and risks.</li>
+            <li>Improved RTK Query API layer and fixed state sync issues that were causing UI inconsistencies and performance drops across dashboard pages.</li>
+            <li>Implemented REST APIs for email threat detection and analytics, including email account categorization, combined analytics endpoints, and usage statistics, with Bearer token authentication and Swagger documentation.</li>
+            <li>Also worked with Git for version control, pushed updates regularly, and verified deployments through GitHub Actions workflows to ensure builds passed before merging changes.</li>
           </ul>
         </div>
         <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-1 sm:pt-2">
@@ -816,6 +893,12 @@
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">TypeScript</span>
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">Node.js</span>
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">PostgreSQL</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">RTK Query</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">REST APIs</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">Swagger</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">OAuth</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">IMAP</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-purple-500/5 dark:bg-purple-500/10 text-purple-400 border border-purple-400/10">GitHub Actions</span>
         </div>
         <a href="https://soemailsecurity.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-medium text-accent-500 touch-manipulation pb-1">
           Visit live site
@@ -831,8 +914,8 @@
       <div class="modal-handle sm:hidden" aria-hidden="true"></div>
       <div class="shrink-0 flex items-start sm:items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-surface-800 sm:rounded-t-3xl">
         <div class="min-w-0 pr-2">
-          <p class="text-xs font-mono text-emerald-400 mb-1">Full Stack Engineering</p>
-          <h3 class="text-lg sm:text-xl font-bold dark:text-white truncate">Direct Verified Worker</h3>
+          <p class="text-xs font-mono text-emerald-400 mb-1">Frontend Engineering</p>
+          <h3 class="text-lg sm:text-xl font-bold dark:text-white truncate">Direct Verified Workers</h3>
         </div>
         <button type="button" onclick="closeProjectModal('dvw')" class="shrink-0 w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-700 flex items-center justify-center hover:border-emerald-400/40 transition-colors touch-manipulation" aria-label="Close">
           <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6l12 12"/></svg>
@@ -842,25 +925,25 @@
         <div class="rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
           <img src="assets/direct-verified-worker.png" alt="" class="w-full h-36 sm:h-48 md:h-56 object-cover object-center" />
         </div>
-        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">A job marketplace platform connecting employers with verified workers through search, messaging, onboarding, and profile management workflows.</p>
+        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">A multi-role marketplace connecting employers with domestic workers — authentication, hiring workflows, KYC, messaging, and payments in React and TypeScript.</p>
         <div>
           <p class="text-sm font-medium dark:text-white text-neutral-800 mb-2 sm:mb-3">My contributions</p>
-          <ul class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed space-y-2 sm:space-y-2.5 list-disc pl-4 sm:pl-5 marker:text-emerald-400">
-            <li>Built and maintained frontend and backend features with React, TypeScript, Node.js, MySQL, Redux Toolkit, and RTK Query.</li>
-            <li>Developed worker discovery, search, filtering, bookmarking, and profile management features.</li>
-            <li>Implemented real-time messaging and notifications using Socket.io.</li>
-            <li>Built authentication, role-based access control, onboarding flows, and employer/worker dashboards.</li>
-            <li>Translated Figma designs into responsive, production-ready interfaces with a focus on usability and accessibility.</li>
+          <ul class="modal-contributions text-neutral-500 dark:text-neutral-400 text-sm sm:text-[0.9375rem] leading-relaxed space-y-3 sm:space-y-3.5 list-disc pl-4 sm:pl-5 marker:text-emerald-400">
+            <li>Led frontend development of Direct Verified Workers, a multi-role marketplace connecting employers with domestic workers, owning the React/TypeScript client from setup through production-ready employer, worker, and admin experiences.</li>
+            <li>Built secure multi-role authentication and onboarding flows using React state management and side-effect handling (useEffect patterns), supporting Google OAuth, email verification gating, and role-based routing for clean dashboard access.</li>
+            <li>Developed employer hiring workflows including worker search, filtering, bookmarks, public profiles, and profile gating, handling dynamic UI states, async API loading, and conditional rendering for authenticated vs unauthenticated users.</li>
+            <li>Shipped worker profile and verification system covering KYC, availability, service categories, resume data, and public profiles, managing complex form state, file uploads, and API-driven updates across multiple UI sections.</li>
+            <li>Implemented core platform features including real-time messaging between employers and workers and Paystack payment integration, coordinating Redux Toolkit state, RTK Query data fetching, and side-effect-driven UI updates.</li>
           </ul>
         </div>
         <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-1 sm:pt-2">
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">React</span>
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">TypeScript</span>
-          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">Node.js</span>
-          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">MySQL</span>
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">Redux Toolkit</span>
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">RTK Query</span>
-          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">Socket.io</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">Vite</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">OAuth</span>
+          <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 text-emerald-400 border border-emerald-400/10">Paystack</span>
         </div>
         <a href="https://dvworkers.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-medium text-accent-500 touch-manipulation pb-1">
           Visit live site
@@ -884,18 +967,13 @@
         </button>
       </div>
       <div class="project-modal-body flex-1 overflow-y-auto min-h-0 px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        <div class="rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 h-36 sm:h-48 md:h-56 bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-transparent flex items-center justify-center relative">
-          <span class="font-mono text-6xl sm:text-7xl font-bold text-amber-500/10">03</span>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-              <svg class="w-6 h-6 sm:w-7 sm:h-7 text-amber-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09zM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456z"/></svg>
-            </div>
-          </div>
+        <div class="rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
+          <img src="assets/treesoft.png" alt="" class="w-full h-36 sm:h-48 md:h-56 object-cover object-center" />
         </div>
         <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Modern agency website with a custom design system, dark/light theme switching, EmailJS integration, and performance-focused Nuxt.js implementation.</p>
         <div>
           <p class="text-sm font-medium dark:text-white text-neutral-800 mb-2 sm:mb-3">My contributions</p>
-          <ul class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed space-y-2 sm:space-y-2.5 list-disc pl-4 sm:pl-5 marker:text-amber-400">
+          <ul class="modal-contributions text-neutral-500 dark:text-neutral-400 text-sm sm:text-[0.9375rem] leading-relaxed space-y-3 sm:space-y-3.5 list-disc pl-4 sm:pl-5 marker:text-amber-400">
             <li>Built responsive UI from Figma designs using Nuxt.js 3, TypeScript, and Tailwind CSS.</li>
             <li>Developed a reusable component library to keep design consistent across pages.</li>
             <li>Implemented dark/light theme switching with smooth transitions.</li>
@@ -931,19 +1009,14 @@
         </button>
       </div>
       <div class="project-modal-body flex-1 overflow-y-auto min-h-0 px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        <div class="rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 h-36 sm:h-48 md:h-56 bg-gradient-to-br from-sky-500/15 via-cyan-500/10 to-transparent flex items-center justify-center relative">
-          <span class="font-mono text-6xl sm:text-7xl font-bold text-sky-500/10">04</span>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center">
-              <svg class="w-6 h-6 sm:w-7 sm:h-7 text-sky-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0z"/></svg>
-            </div>
-          </div>
+        <div class="rounded-xl sm:rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
+          <img src="assets/bai-innovations.png" alt="" class="w-full h-36 sm:h-48 md:h-56 object-cover object-center" />
         </div>
-        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed"><span class="font-medium dark:text-white text-neutral-800">Renewable Energy Portfolio Management Platform</span> — corporate website frontend supporting the Zenova APP ecosystem.</p>
+        <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed"><span class="font-medium dark:text-white text-neutral-800">Energy intelligence platform</span> — corporate website for unified monitoring, sustainability insights, and products including Zenova and Ecosnap.</p>
         <div>
           <p class="text-sm font-medium dark:text-white text-neutral-800 mb-2 sm:mb-3">My contributions</p>
-          <ul class="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed space-y-2 sm:space-y-2.5 list-disc pl-4 sm:pl-5 marker:text-sky-400">
-            <li>Developed frontend features for the BAI Innovations corporate website using React, TypeScript, Vite, and Tailwind CSS, supporting the Zenova renewable energy platform.</li>
+          <ul class="modal-contributions text-neutral-500 dark:text-neutral-400 text-sm sm:text-[0.9375rem] leading-relaxed space-y-3 sm:space-y-3.5 list-disc pl-4 sm:pl-5 marker:text-sky-400">
+            <li>Developed frontend features for the BAI Innovations corporate website using React, TypeScript, Vite, and Tailwind CSS, supporting the Zenova and Ecosnap renewable energy platforms.</li>
             <li>Built and maintained 15+ responsive pages — product showcases, integrations, case studies, resource downloads, support, and contact/demo forms.</li>
             <li>Set up frontend routing with React Router, reusable layouts, and interactive UI components using Flowbite.</li>
             <li>Built customer support and service desk interfaces with search, forms, and documentation pages.</li>
@@ -958,6 +1031,10 @@
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-sky-500/5 dark:bg-sky-500/10 text-sky-400 border border-sky-400/10">React Router</span>
           <span class="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-sky-500/5 dark:bg-sky-500/10 text-sky-400 border border-sky-400/10">Flowbite</span>
         </div>
+        <a href="https://bainnovations.ca/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-medium text-accent-500 touch-manipulation pb-1">
+          Visit live site
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+        </a>
       </div>
     </div>
   </div>
