@@ -95,9 +95,6 @@
       from { width: 0; }
       to { width: 100%; }
     }
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
     @keyframes marquee {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
@@ -122,8 +119,7 @@
       display: inline-block;
       overflow: hidden;
       white-space: nowrap;
-      border-right: 2px solid #6366F1;
-      animation: typewriter 2s steps(30) 0.5s both, blink 0.8s step-end infinite;
+      animation: typewriter 2s steps(30) 0.5s both;
     }
 
     /* stagger */
@@ -237,7 +233,6 @@
       .typewriter-text {
         white-space: normal;
         overflow: visible;
-        border-right: none;
         animation: none;
         font-size: 0.75rem;
         line-height: 1.4;
@@ -492,7 +487,7 @@
           </p>
 
           <!-- Stats row -->
-          <div class="stats-grid grid grid-cols-3 gap-3 sm:gap-6 pt-6 border-t border-neutral-200 dark:border-neutral-800">
+          <div class="stats-grid grid grid-cols-2 gap-3 sm:gap-6 pt-6 border-t border-neutral-200 dark:border-neutral-800">
             <div>
               <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-accent-500">4+</p>
               <p class="text-xs sm:text-sm text-neutral-500 mt-1">Projects shipped</p>
@@ -500,10 +495,6 @@
             <div>
               <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-accent-500">2</p>
               <p class="text-xs sm:text-sm text-neutral-500 mt-1">Companies</p>
-            </div>
-            <div>
-              <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-accent-500">3+</p>
-              <p class="text-xs sm:text-sm text-neutral-500 mt-1">Years experience</p>
             </div>
           </div>
         </div>
